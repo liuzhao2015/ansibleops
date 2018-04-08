@@ -1,14 +1,5 @@
 ---
 
 
-#[init user]
-zend_user: zeusadmin
-zend_password: hH3S2kxVNU4sbCfh
-#zend_cry_password: -1pi/EkHU52Ws
-
-#[jifang]
-jifang: AWS
 
 
-#[HAPROXY]
-haproxy_user: haproxy

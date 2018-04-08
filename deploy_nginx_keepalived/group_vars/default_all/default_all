@@ -1,8 +1,8 @@
 ---
 #ansible_ssh_host=192.169.1.100
 ansible_ssh_port: 22
-ansible_ssh_user: zeusadmin
-ansible_ssh_pass: hH3S2kxVNU4sbCfh
+ansible_ssh_user: 
+ansible_ssh_pass: 
 ansible_sudo: root
 #ansible_sudo_pass: L4nxYzhW
 #ansible_sudo_exe=/usr/bin/sudo

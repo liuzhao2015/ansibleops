@@ -1,85 +1,19 @@
-[AWS]
-
-54.223.26.248
-54.223.200.10
-52.80.24.130
-54.223.179.234
-
-52.53.117.103
-52.192.129.89
-
-13.124.93.42
-
-52.39.28.171
-52.32.106.115
-
-54.227.67.221
-[SOFTLYER]
-192.155.199.217
-75.126.214.117
-184.172.2.230
-
-119.81.140.231
-119.81.140.234
-
-169.60.30.164
-169.60.30.165
-169.48.179.91
-169.48.170.238
-169.48.170.232
-169.48.170.229
-169.48.170.151
-50.97.75.170
-
-75.126.154.54
-
-50.97.75.169
-
-75.126.25.222
-108.168.207.7
+[GITLAB]
+gitlab01   ansible_ssh_host=192.168.101   ansible_ssh_user="ansibleops" ansible_ssh_private_key_file=ssh_keys/ansibleops_20180408.pem ansible_ssh_port="22"
+[JENKINS]
+jenkins01   ansible_ssh_host=192.168.101   ansible_ssh_user="ansibleops" ansible_ssh_private_key_file=ssh_keys/ansibleops_20180408.pem ansible_ssh_port="22"
 
 
-[KEXING]
+[ANSIBLE]
+ansible01   ansible_ssh_host=192.168.101   ansible_ssh_user="ansibleops" ansible_ssh_private_key_file=ssh_keys/ansibleops_20180408.pem ansible_ssh_port="22"
 
-120.24.218.9
-119.81.140.231
-119.81.140.234
-119.147.71.166 #/123.58.59.166
-218.18.158.239 #/123.58.50.239
-54.223.26.248
-54.223.200.10
-52.80.24.130
-54.223.179.234
+
+[SONARQUBE]
+sonarqube01   ansible_ssh_host=192.168.101   ansible_ssh_user="ansibleops" ansible_ssh_private_key_file=ssh_keys/ansibleops_20180408.pem ansible_ssh_port="22"
+
+[SELENIUM]
+selenium01   ansible_ssh_host=192.168.101   ansible_ssh_user="ansibleops" ansible_ssh_private_key_file=ssh_keys/ansibleops_20180408.pem ansible_ssh_port="22"
 
 
 
-183.60.29.165 #/123.58.53.165
-183.60.29.162 #/123.58.53.162
-52.53.117.103
-52.192.129.89
-52.80.60.27
-169.60.30.164
-169.60.30.165
-169.48.179.91
-169.48.170.238
-169.48.170.232
-169.48.170.229
-169.48.170.151
-50.97.75.170
-119.147.71.188 #/123.58.59.188
-75.126.154.54
-13.124.93.42
-
-
-
-123.58.59.187   #,119.147.71.187
-183.57.41.194   #,106.3.229.194
-183.60.29.163   #/123.58.53.163
-218.18.158.213  #/123.58.50.213
-202.104.102.111 #/123.58.55.111
-218.18.158.215  #/123.58.50.215
-
-[beijing]
-
-52.80.60.27
 
