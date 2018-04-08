@@ -1,0 +1,154 @@
+---
+
+
+- name: yum install  common file
+  yum: name={{ item }} state=latest
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "6"
+  with_items:
+    - [ 'libselinux-python' ]
+
+
+
+- name: iptables -F
+  become: yes
+  iptables: flush=yes
+
+
+- name: iptables save
+  become: yes
+  shell: service iptables save
+
+
+- name: restart iptables
+  become: yes
+  service: name=iptables state={{ item }}
+  with_items:
+    - restarted
+
+- name: stop zabbix
+  become: yes
+  service: name=zabbix_agentd state=stopped 
+  ignore_errors: yes
+
+- name: remove user zeusadmin
+  user: name={{ zend_user }} remove=yes state=absent
+
+- name: remove become privileges
+  lineinfile: dest=/etc/sudoers state=present  regexp='{{item.regexp}}'    state=present line='{{item.line}}' 
+  with_items:
+    - { regexp: '{{ zend_user }} ALL=(ALL) NOPASSWD: ALL', line: ' '  }
+
+- name: reset sshd
+  lineinfile: dest=/etc/ssh/sshd_config  regexp='{{item.regexp}}'    state=present line='{{item.line}}'
+  with_items:
+    - { regexp: 'UseDNS yes', line: '#UseDNS no'  }
+    - { regexp: 'GSSAPIAuthentication no', line: 'GSSAPIAuthentication yes'  }
+    - { regexp: '#PermitRootLogin yes', line: 'PermitRootLogin no'  }
+
+- name: reset Historysize 6000 to 1000
+  lineinfile: dest=/etc/profile           regexp='{{item.regexp}}' state=present  line='{{item.line}}'
+  with_items:
+    - { regexp: 'HISTSIZE=6000', line: 'HISTSIZE=1000'  }
+
+- name: reset HISTTIMEFORMAT
+  lineinfile: dest=/etc/profile    regexp='{{item.regexp}}'    state=present line='{{item.line}}'
+  with_items:
+    - { regexp: 'export HISTTIMEFORMAT="[%F %T `whoami`]"', line: ' '  }
+
+
+
+
+
+- name: remove limits.conf
+  lineinfile: dest=/etc/security/limits.conf   regexp='{{item.regexp}}'    state=present line='{{item.line}}'
+  with_items:
+    - { regexp: '^\*               hard    nofile           1024000', line: ' '  }
+    - { regexp: '^\*               soft    nofile           1024000', line: ''  }
+    - { regexp: '^\*               hard    nproc            102400', line: ''  }
+    - { regexp: '^\*               soft    nproc            102400', line: ''  }
+  ignore_errors: yes
+  tags: removelimit
+
+
+- name: remove sysctl.conf
+  lineinfile: dest=/etc/sysctl.conf   regexp='{{item.regexp}}'    state=present line='{{item.line}}'
+  with_items:
+    - { regexp: 'net.core.rmem_default = 126976', line: ''}
+    - { regexp: 'net.core.wmem_default = 126976', line: ''}
+    - { regexp: 'net.core.wmem_max = 16777216', line: ''}
+    - { regexp: 'net.core.rmem_max = 16777216', line: ''}
+    - { regexp: 'net.ipv4.tcp_mem = 4096 87380 16777216', line: ''}
+    - { regexp: 'net.ipv4.tcp_wmem = 4096 65536 16777216', line: ''}
+    - { regexp: 'net.ipv4.tcp_rmem = 4096 87380 16777216', line: ''}
+    - { regexp: 'net.core.netdev_max_backlog = 2500', line: ''}
+    - { regexp: 'net.core.somaxconn = 262144', line: ''}
+    - { regexp: 'net.ipv4.tcp_no_metrics_save = 1', line: ''}
+    - { regexp: 'net.ipv4.tcp_moderate_rcvbuf = 1', line: ''}
+    - { regexp: 'net.ipv4.tcp_fin_timeout = 5', line: ''}
+    - { regexp: 'net.ipv4.tcp_keepalive_time = 1800', line: ''}
+    - { regexp: 'net.ipv4.tcp_syncookies = 1', line: ''}
+    - { regexp: 'net.ipv4.tcp_sack = 0', line: ''}
+    - { regexp: 'net.ipv4.tcp_tw_reuse = 1', line: ''}
+    - { regexp: 'net.ipv4.tcp_tw_recycle = 1', line: ''}
+    - { regexp: 'net.ipv4.ip_local_port_range = 10250 65000', line: ''}
+    - { regexp: 'net.ipv4.tcp_max_syn_backlog = 81920', line: ''}
+    - { regexp: 'net.ipv4.tcp_max_tw_buckets = 1600000', line: ''}
+    - { regexp: 'net.ipv4.tcp_synack_retries = 2', line: ''}
+    - { regexp: 'net.ipv4.tcp_syn_retries = 2', line: ''}
+    - { regexp: 'net.ipv4.tcp_retries2 = 2', line: ''}
+    - { regexp: 'net.ipv4.tcp_window_scaling = 1', line: ''}
+    - { regexp: 'net.ipv4.tcp_timestamps = 1', line: ''}
+    - { regexp: 'vm.dirty_writeback_centisecs = 100', line: ''}
+    - { regexp: 'vm.dirty_ratio = 10', line: ''}
+    - { regexp: 'vm.dirty_background_ratio = 5', line: ''}
+
+- name: setup sysctl alive
+  shell: "/sbin/sysctl -p"
+
+
+
+
+- name: reset vim color
+  lineinfile: dest=/etc/DIR_COLORS             regexp='{{item.regexp}}' state=present  line='{{item.line}}'
+  with_items:
+    - { regexp: 'DIR 01;37;44', line: 'DIR 01;34'  }
+ 
+
+- name: remove vimrc set
+  lineinfile: dest=/etc/vimrc   regexp='{{item.regexp}}'    state=present line='{{item.line}}'
+  with_items: 
+    - { regexp: 'set paste', line: ''  }
+    - { regexp: 'set nosmartindent', line: ''  }
+    - { regexp: 'hi Comment term=bold cterm=bold ctermfg=4', line: ''  }
+
+
+
+- name: yum remove  common file
+  yum: name={{ item }} state=absent skip_broken=yes
+  with_items:
+    - [ 'openssl-devel' ,'gcc-c++','gcc' ]
+    - [ 'perl' ,'perl-devel' ]
+    - [ 'postfix' ]
+    - [ 'dos2unix','unzip','pcre-devel' ]
+    - [ 'ncurses-devel','vsftpd','net-snmp'  ]
+    - [ 'sysstat','lrzsz','vim-enhanced' ]
+    - [ 'lsscsi','redhat-lsb-core','pciutils','parted','smartmontools','dmidecode' ]
+#  ignore_errors: yes
+  tags: removeyum 
+
+
+
+
+
+- name: clear sh file
+  become: yes
+  file: path={{ item }} state=absent
+  with_items:
+    - /root/configzabbix.sh
+    - /root/zabbix
+    - /root/zabbix.tar.gz
+    - /root/CMDBClient.tar.gz
+    - /root/*.log
+    - /root/falcon-agent.tar.gz
+    - /usr/local/monitor
+    - /usr/local/CMDBClient/

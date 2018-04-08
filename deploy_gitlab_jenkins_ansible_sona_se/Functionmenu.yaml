@@ -2,79 +2,72 @@
 
 
 
-#1.INSTALL LAMP
-- name: INSTALL  LAMP
+#1.INSTALL GITLAB
+- name: INSTALL  GITLAB
   sudo: yes
   hosts: 
-   - LAMP
+   - GITLAB
   remote_user: root
   gather_facts: True
   roles:
-    - LAMP
+    - GITLAB
   tags:
-   - LAMP
+   - GITLAB
 
-#2.INSTALL TENGINX
-- name: INSTALL TENGINX
+#2.INSTALL JENKINS
+- name: INSTALL JENKINS
   sudo: yes
   hosts:
-   - TENGINX
-  remote_user: root
-  gather_facts: False
-  roles:
-    - TENGINX
-  tags:
-   - TENGINX
-#3.INSTALL REDIS
-- name: INSTALL REDIS
-  sudo: yes
-  hosts:
-   - REDIS
+   - JENKINS
   remote_user: root
   gather_facts: False
   roles:
-    - REDIS
+    - JENKINS
   tags:
-   - REDIS
-
-#4.INSTALL SPHINX
-- name: INSTALL SPHINX
+   - JENKINS
+#3.INSTALL ANSIBLE
+- name: INSTALL ANSIBLE
   sudo: yes
   hosts:
-   - SPHINX
+   - ANSIBLE
+  remote_user: root
+  gather_facts: False
+  roles:
+    - ANSIBLE
+  tags:
+   - ANSIBLE
+
+#4.INSTALL SONARQUBE
+- name: INSTALL SONARQUBE
+  sudo: yes
+  hosts:
+   - SONARQUBE
   remote_user: root
   gather_facts: True
   roles:
-    - SPHINX
+    - SONARQUBE
   tags:
-   - SPHINX
+   - SONARQUBE
 
 
 
 
-#5.INSTALL HAPROXY
-- name: INSTALL HAPROXY
+#5.INSTALL SELENIUM
+- name: INSTALL SELENIUM
   sudo: yes
   hosts:
-   - HAPROXY
+   - SELENIUM
   remote_user: zeusadmin
   gather_facts: True
   roles:
-    - HAPROXY
+    - SELENIUM
   tags:
-   - HAPROXY
+   - SELENIUM
 
-#6.INSTALL SQUID
-- name: INSTALL SQUID
-  sudo: yes
-  hosts:
-   - SQUID
-  remote_user: zeusadmin
-  gather_facts: True
-  roles:
-    - SQUID
-  tags:
-   - SQUID
+
+
+
+
 
 
 

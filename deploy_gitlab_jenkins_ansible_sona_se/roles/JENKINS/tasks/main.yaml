@@ -1,0 +1,13 @@
+---
+
+- name: UNINIT hosts
+  include: UNINIT.yaml
+  tags: 
+    - UNINIT
+
+
+- name: INIT hosts
+  include:  INIT.yaml
+  tags: 
+    - INIT1
+

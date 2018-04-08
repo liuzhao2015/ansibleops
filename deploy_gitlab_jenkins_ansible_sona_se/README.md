@@ -1,13 +1,9 @@
-projectname: lnamp
-projectpackagename: lnamps-1.0.0-playbook.tar.gz
+projectname: deploy_gitlab_jenkins_ansible_sona_se
+projectpackagename: deploy_gitlab_jenkins_ansible_sona_se.zip
 version: 1.0.0
 packages:
     - nginx-1.9.tar.gz
-    - apache-2.23.tar.gz
-    - php-5.6.tar.gz
-    - sphinx-2.2.11.tar.gz
-    - mysql-5.7.tar.gz
-    - init-1.0.0.tar.gz
+
 
 使用说明：
 

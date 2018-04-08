@@ -1,0 +1,304 @@
+---
+
+- name: test OMD
+  become: yes
+  script: /opt/Ansible/playbook/initsystem/roles/INIT/files/testOMD.sh     
+  ignore_errors: yes
+  tags: testOMD
+  
+
+
+
+
+
+- name: clear sh file
+  become: yes
+  file: path={{ item }} state=absent
+  with_items:
+    - /root/configzabbix.sh
+    - /root/zabbix
+    - /root/zabbix.tar.gz
+    - /root/CMDBClient.tar.gz
+    - /root/*.log
+    - /root/falcon-agent.tar.gz
+#CENTOS 6
+- name: yum install  common file
+  yum: name={{ item }} state=latest
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "6"
+  with_items:
+    - [ 'openssl-devel','gcc-c++','gcc','make' ]
+    - [ 'perl','perl-devel','db4-utils','postfix' ]
+    - [ 'dos2unix','unzip','pcre-devel','telnet' ]
+    - [ 'ncurses-devel','vsftpd','net-snmp'  ]
+    - [ 'sysstat','lrzsz','vim-enhanced','libselinux-python' ]
+    - [ 'lsscsi','redhat-lsb-core','pciutils','parted','smartmontools','dmidecode' ]
+
+
+#CENTOS 7
+- name: yum install  common file
+  yum: name={{ item }} state=latest
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+  with_items:
+    - [ 'openssl-devel','gcc-c++','gcc','make' ]
+    - [ 'perl','perl-devel','postfix','telnet' ]
+    - [ 'dos2unix','unzip','pcre-devel','iptables','iptables-services']
+    - [ 'ncurses-devel','vsftpd','libdb-utils','net-snmp'  ]
+    - [ 'sysstat','lrzsz','vim-enhanced','libselinux-python' ]
+    - [ 'lsscsi','redhat-lsb-core','pciutils','parted','smartmontools','dmidecode' ]
+
+
+
+
+
+- name: add user zeusadmin
+#  user: name={{ zend_user }} comment="zend user" password={{ zend_cry_password }} update_password=always 
+  user: name={{ zend_user }} comment="zend user" password={{ zend_password|password_hash('sha512') }} update_password=always 
+  tags: adduser
+
+- name: add become privileges
+  lineinfile: dest=/etc/sudoers state=present  line='{{item}}' validate='visudo -cf %s'
+  with_items:
+    - "{{ zend_user }} ALL=(ALL) NOPASSWD: ALL"
+#    - "Defaults: {{ zend_user }}  !requiretty"
+
+- name: set sshd
+  lineinfile: dest=/etc/ssh/sshd_config  regexp='{{item.regexp}}'    state=present line='{{item.line}}'
+  with_items:
+#    - { regexp: '#PermitRootLogin yes', line: 'PermitRootLogin no'  }
+    - { regexp: '#UseDNS yes', line: 'UseDNS no'  }
+    - { regexp: 'GSSAPIAuthentication yes', line: 'GSSAPIAuthentication no'  }
+
+- name: set Historysize
+  lineinfile: dest=/etc/profile           regexp='{{item.regexp}}' state=present  line='{{item.line}}'
+  with_items:
+    - { regexp: 'HISTSIZE=1000', line: 'HISTSIZE=6000'  }
+
+- name: set HISTTIMEFORMAT
+  lineinfile: dest=/etc/profile  state=present line='{{item}}'
+  with_items:
+    - export HISTTIMEFORMAT="[%F %T `whoami`]"
+
+
+
+
+
+
+- name: set limits.conf
+  lineinfile: dest=/etc/security/limits.conf state=present line='{{item}}' 
+  with_items:
+    - "*               hard    nofile           1024000"
+    - "*               soft    nofile           1024000"
+    - "*               hard    nproc            102400"
+    - "*               soft    nproc            102400"
+- name: set sysctl.conf
+  lineinfile: dest=/etc/sysctl.conf state=present line='{{item}}' 
+  with_items:
+    - "net.core.rmem_default = 126976"
+    - "net.core.wmem_default = 126976"
+    - "net.core.wmem_max = 16777216"
+    - "net.core.rmem_max = 16777216"
+    - "net.ipv4.tcp_mem = 4096 87380 16777216"
+    - "net.ipv4.tcp_wmem = 4096 65536 16777216"
+    - "net.ipv4.tcp_rmem = 4096 87380 16777216"
+    - "net.core.netdev_max_backlog = 2500"
+    - "net.core.somaxconn = 262144"
+    - "net.ipv4.tcp_no_metrics_save = 1"
+    - "net.ipv4.tcp_moderate_rcvbuf = 1"
+    - "net.ipv4.tcp_fin_timeout = 5"
+    - "net.ipv4.tcp_keepalive_time = 1800"
+    - "net.ipv4.tcp_syncookies = 1"
+    - "net.ipv4.tcp_sack = 0"
+    - "net.ipv4.tcp_tw_reuse = 1"
+    - "net.ipv4.tcp_tw_recycle = 1"
+    - "net.ipv4.ip_local_port_range = 10250 65000"
+    - "net.ipv4.tcp_max_syn_backlog = 81920"
+    - "net.ipv4.tcp_max_tw_buckets = 1600000"
+    - "net.ipv4.tcp_synack_retries = 2"
+    - "net.ipv4.tcp_syn_retries = 2"
+    - "net.ipv4.tcp_retries2 = 2"
+    - "net.ipv4.tcp_window_scaling = 1"
+    - "net.ipv4.tcp_timestamps = 1"
+    - "vm.dirty_writeback_centisecs = 100"
+    - "vm.dirty_ratio = 10"
+    - "vm.dirty_background_ratio = 5"
+
+- name: setup sysctl alive
+  shell: "/sbin/sysctl -p"
+
+
+
+
+- name: setup vim color
+  lineinfile: dest=/etc/DIR_COLORS             regexp='{{item.regexp}}' state=present  line='{{item.line}}'
+  with_items:
+    - { regexp: 'DIR 01;34', line: 'DIR 01;37;44'  }
+ 
+
+- name: setup vimrc
+  lineinfile: dest=/etc/vimrc state=present line='{{item}}'
+  with_items: 
+    - "set paste"
+    - "set nosmartindent"
+    - "hi Comment term=bold cterm=bold ctermfg=4" 
+  ignore_errors: yes
+
+
+
+
+- name: init monit dirs
+  file: path={{ item }} state=directory mode=0755
+  with_items:
+    - /usr/local/CMDBClient
+    - /usr/local/monitor/open-falcon
+    - /usr/local/monitor/open-falcon/agent
+
+
+
+- name: download pkg
+  get_url: url={{ item }} dest=/root/ mode=0755
+  with_items:
+     - https://s3.ap-northeast-2.amazonaws.com/yunweiconfig/CMDBClient/CMDBClient.tar.gz
+     - https://s3.ap-northeast-2.amazonaws.com/yunweiconfig/xiaomi/falcon-agent.tar.gz
+     - https://s3.ap-northeast-2.amazonaws.com/yunweiconfig/zabbix/zabbix.tar.gz
+     - http://brick.kernel.dk/snaps/fio-2.2.8.tar.gz
+
+- name: Mcopy PKG to /root/.
+  become: yes
+  copy: src=files/{{ item }}  dest=/root/  owner=root group=root mode=0700 force=yes
+  with_items: 
+    - db_fio-test.zip
+#    - CMDBClient.tar.gz
+#    - falcon-agent.tar.gz
+#    - zabbix.tar.gz
+#    - fio-2.2.8.tar.gz
+
+- name: unarchive monit files
+  unarchive: copy=no  src={{ item.src }}  dest={{ item.dest  }} owner=root group=root mode=0755
+  with_items:
+     - { src: '/root/CMDBClient.tar.gz',     dest: '/usr/local/CMDBClient/' }
+     - { src: '/root/falcon-agent.tar.gz' ,  dest: '/usr/local/monitor/open-falcon/agent/' }
+     - { src: '/root/zabbix.tar.gz' , dest: '/root/' }
+     - { src: '/root/fio-2.2.8.tar.gz' , dest: '/root/' }
+
+- name: run CMDBClient
+  become: yes
+  command: /usr/bin/python /usr/local/CMDBClient/bin/Client.py report_asset
+
+- name: install xiaomi monitor for SOFTLAYER
+  become: yes
+  shell: "{{ item  }}"
+  when: jifang == "SOFTLAYER"
+  with_items:
+    - "/bin/mv /usr/local/monitor/open-falcon/agent/cfg.json /usr/local/monitor/open-falcon/agent/cfg.json.aws"
+    - "/bin/mv /usr/local/monitor/open-falcon/agent/cfg.json.softlayer  /usr/local/monitor/open-falcon/agent/cfg.json"
+    - "/usr/local/monitor/open-falcon/agent/control restart"
+    - "/usr/local/monitor/open-falcon/agent/control status"
+
+- name: run xiaomi monitor
+  become: yes
+  script: /opt/Ansible/playbook/initsystem/roles/INIT/files/restartxiaomi.sh
+  ignore_errors: yes
+  tags: runxiaomi
+
+
+
+
+    
+- name: install zabbix to WEB
+  become: yes 
+  shell: "cd /root/zabbix/ && /bin/bash -x ./zabbix_client.sh www"
+  when: "'WEB' in group_names" 
+  ignore_errors: yes
+  
+- name: install zabbix to DB
+  become: yes
+  shell: "cd /root/zabbix/ && /bin/bash -x ./zabbix_client.sh db"
+  when: "'DB' in group_names"
+  ignore_errors: yes
+
+
+
+- name: configzabbix
+  become: yes
+  script: /opt/Ansible/playbook/initsystem/roles/INIT/files/WEBconfigzabbix.sh
+  when: "'WEB' in group_names"
+  ignore_errors: yes
+  tags: configzabbix
+
+
+- name: configzabbix
+  become: yes
+  script: /opt/Ansible/playbook/initsystem/roles/INIT/files/DBconfigzabbix.sh
+  when: "'DB' in group_names"
+  ignore_errors: yes
+  tags: configzabbix
+
+
+
+- name: unarchive fio files
+  become: yes
+  unarchive: copy=no  src={{ item.src }}  dest={{ item.dest  }} owner=root group=root mode=0755
+  when: "'DB' in group_names"
+  with_items:
+     - { src: '/root/db_fio-test.zip' , dest: '/root/' }
+
+
+
+
+- name: configure fio
+  become: yes
+  command: /root/fio-2.2.8/configure --prefix=/usr
+  when: "'DB' in group_names"
+
+- name: make fio-2.2.8
+  become: yes
+  make: chdir=/root/fio-2.2.8 
+  when: "'DB' in group_names"
+
+- name: make fio-2.2.8 install
+  become: yes
+  make: chdir=/root/fio-2.2.8 target={{ item }}
+  when: "'DB' in group_names"
+  with_items:
+   - "install"
+
+- name: run fio
+  become: yes
+  when: "'DB' in group_names"
+  shell: source /etc/profile>/dev/null && cd /root/db_fio-test/ && /usr/bin/nohup /bin/bash testserver.sh &
+
+
+#- name: copy system_init.sh to /root/.
+#  become: yes
+#  copy: src=files/{{ item }}  dest=/root/  owner=root group=root mode=0700 force=yes
+#  with_items: 
+#    - sys_init/system_init.sh
+#    - StartinitWEB.sh
+#    - configzabbix.sh
+
+#- name: start execute shell scripts init WEB.
+#  become: yes
+#  shell: "{{ item }}" 
+#  with_items: 
+#    - dos2unix /root/*.sh
+#    - /usr/bin/nohup /bin/bash /root/StartinitWEB.sh>>/dev/null
+#  async: 300
+#  poll: 5
+
+#- name: start execute shell scripts config zabbix
+#  become: yes
+#  shell: "{{ item }}"
+#  with_items:
+#    - /usr/bin/nohup /bin/bash /root/configzabbix.sh
+#  ignore_errors: yes
+
+- name: clear sh file
+  become: yes
+  file: path={{ item }} state=absent
+  with_items:
+    - /root/configzabbix.sh
+    - /root/zabbix
+    - /root/zabbix.tar.gz
+    - /root/CMDBClient.tar.gz
+    - /root/*.log
+    - /root/falcon-agent.tar.gz
