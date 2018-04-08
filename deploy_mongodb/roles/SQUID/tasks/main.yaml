@@ -1,0 +1,67 @@
+---
+
+#CENTOS 6
+#- name: yum install  common file to CENTOS 6
+#  sudo: yes
+#  yum: name={{ item }} state=latest
+##  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "6"
+#  with_items:
+#    - [ 'openssl-devel','gcc-c++','gcc','make' ]
+#    - [ 'perl','perl-devel','db4-utils','postfix' ]
+#    - [ 'dos2unix','unzip','pcre-devel','telnet' ]
+#    - [ 'ncurses-devel','vsftpd','net-snmp'  ]
+#    - [ 'sysstat']
+##    - ,'lrzsz',
+#    - [ 'vim-enhanced','libselinux-python' ]
+#    - [ 'lsscsi','redhat-lsb-core','pciutils','parted']
+##,'smartmontools',
+#    - [ 'dmidecode' ]
+#    - [ 'squid' ]
+
+##CENTOS 7
+- name: yum install  common file to CENTOS 7
+  sudo: yes
+  yum: name={{ item }} state=latest
+#  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+  with_items:
+    - [ 'openssl-devel','gcc-c++','gcc','make' ]
+    - [ 'perl','perl-devel','postfix','telnet' ]
+    - [ 'dos2unix','unzip','pcre-devel','iptables']
+#,'iptables-services']
+    - [ 'ncurses-devel','vsftpd']
+#,'libdb-utils',
+    - [ 'net-snmp'  ]
+    - [ 'sysstat','lrzsz','vim-enhanced','libselinux-python' ]
+    - [ 'lsscsi','redhat-lsb-core','pciutils','parted','smartmontools','dmidecode' ]
+    - [ 'squid' ]
+
+#- name: copy squid.conf to /etc/squid/.
+#  become: yes
+#  copy: src=files/{{ item }}  dest= /etc/squid/  owner=root group=root mode=0700 force=yes
+#  with_items: 
+#    - squid.conf
+#  tag: configsquid
+
+- name: setup iptables
+  become: yes
+  shell: /sbin/iptables -F;servce iptables save;service iptables restart
+  tags: configsquid
+
+- name: copy squid.conf to /etc/squid.
+  become: yes
+  copy: src=files/{{ item }} dest=/etc/squid/ owner=root group=root mode=0700 force=yes backup=yes
+  with_items:
+    - squid.conf
+  tags: configsquid
+
+
+
+- name: restart squid
+  become: yes
+  service: name=squid state=restarted
+  ignore_errors: yes
+  tags: configsquid
+
+- name: setup start host run squid
+  sudo: yes
+  shell: chkconfig --level 3 squid on

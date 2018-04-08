@@ -1,0 +1,90 @@
+---
+
+
+- name: stop flumeAgent
+  become: yes
+  scripts: scripts/stopflumeAgent.sh
+  ignore_errors: yes
+
+
+- name: backup data file
+
+- name: delete deploy file
+  become: yes
+  file: path={{flumeAgentHome }}/flumeAgent  state=ansent
+  ignore_errors: yes
+
+
+
+- name: install libselinux-python dos2unix.
+  become: yes
+  yum: name={{ item }} state=latest 
+  with_items: 
+    - [ 'libselinux-python' ]
+
+- name: update local flumeAgent install pkg
+  become: yes
+  shell: /bin/rm -f ../files/elog-flume.tar.gz;/bin/wget -o ../files/elog-flume.tar.gz http://10.40.6.152:8080/tools/elog-flume-1106.tar.gz
+  connection: local
+
+- name: copy elog-flume.tar.gz to /root/.
+  sudo: yes
+  copy: src=files/{{ item }}  dest=/root/  owner=root group=root mode=0700 force=yes
+  with_items: 
+    - elog-flume.tar.gz
+
+- name: unarchive monit files
+  sudo: yes
+  unarchive: copy=no  src={{ item.src }}  dest={{ item.dest  }} owner=root group=root mode=0755
+  with_items:
+     - { src: '/root/elog-flume.tar.gz',     dest: '/root/' }
+
+- name: rm default server.conf
+  sudo: yes
+  file: path={{ item }} state=absent
+  with_items:
+    - /roo/elog-flume/conf/agent.conf
+
+- name: setup iptables open 34545
+  sudo: yes
+  shell: "{{ item }}"
+  with_items:
+    - /sbin/iptables -A INPUT -s 0.0.0.0  -p tcp --dport 34545  -j ACCEPT
+    - service iptables save
+    - service iptables restart
+
+
+
+
+
+
+- name: copy agent.conf to remote
+  sudo: yes
+  copy: src=files/{{ item }}  dest=/roo/elog-flume/conf/  owner=root group=root mode=0700 force=yes
+  with_items:
+    - agent.conf
+
+
+- name: restup softlay config
+  lineinfile: dest='{{item.dest}}'             regexp='{{item.regexp}}' state=present  line='{{item.line}}'
+  with_items:
+    - { dest: /root/elog-flume/conf, regexp: 'env=test', line: 'env=pro_softlayer'  }
+    - { dest: /root/elog-flume/conf, regexp: 'agentName=elog-jstorm', line: 'env=pro_softlayer'  }
+    - { dest: /root/elog-flume/conf, regexp: '', line: 'env=pro_softlayer'  }
+  when: jifang == "SOFTLAYER"
+
+- name: start flumeAgent
+  sudo: yes
+  shell: "{{ item }}"
+  with_items:
+    - /bin/bash /root/elog-flume/bin/startup.sh
+
+
+
+- name: delete deploy file
+  sudo: yes
+  file: path={{ item }} state=ansent
+  with_items:
+    - /root/elog-flume.tar.gz
+  ignore_errors: yes
+

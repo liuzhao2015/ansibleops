@@ -1,0 +1,80 @@
+---
+
+
+
+#1.初始化web机器
+- name: init  machines
+  sudo: yes
+  hosts: 
+   - WEB
+   - DB
+  remote_user: root
+  gather_facts: True
+  roles:
+#    - check
+    - INIT
+  tags:
+   - INIT
+
+
+
+#2.还原初始化过的机器
+#- name: uninit  machines
+#  sudo: yes
+#  hosts:
+#   - WEB
+#   - DB
+#  remote_user: root
+#  gather_facts: False
+#  roles:
+#    - INIT
+#  tags:
+#   - UNINIT1
+
+#3.检查所有机器
+- name: check ALL machines
+  sudo: yes
+  hosts:
+   - check
+  remote_user: root
+  gather_facts: False
+  roles:
+    - check
+  tags:
+   - check
+
+#install TENGINX
+- name: install TENGINX
+  sudo: yes
+  hosts:
+   - TENGINX
+  remote_user: root
+  gather_facts: False
+  roles:
+    - TENGINX
+  tags:
+   - TENGINX
+
+
+
+
+
+#4.刷防火墙
+- name: setup iptables
+  sudo: yes
+  hosts: 
+   - DB
+   - WEB
+  remote_user: root
+  gather_facts: False
+  roles:
+   - IPTABLES
+  tags:
+   - IPTABLES
+
+
+
+
+
+
+

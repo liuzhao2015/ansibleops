@@ -1,0 +1,39 @@
+---
+
+- name: clear sh file
+  sudo: yes
+  file: path={{ item }} state=absent
+  with_items:
+    - /root/checkmachine.sh
+    - /tmp/mathineReport
+
+
+- name: yum install  common file
+  sudo: yes
+  yum: name={{ item }} state=latest
+  with_items:
+    - [ 'libselinux-python','dos2unix','sg3_utils','lsscsi','redhat-lsb','dmidecode','hdparm','smartmontools' ]
+
+  
+- name: start execute shell scripts check machines
+  sudo: yes
+  script: scripts/checkmachine.sh
+  ignore_errors: yes
+  tags: checkmachines 
+
+
+- name: fetch checkReport.txt
+  sudo: yes
+  fetch: src=/tmp/mathineReport/check{{ inventory_hostname }}Report.txt dest=/home/admin/ flat=yes
+
+
+- name: clear sh file
+  sudo: yes
+  file: path={{ item }} state=absent
+  with_items:
+    - /root/checkmachine.sh
+    - /tmp/mathineReport
+
+- name: scan nginx
+  become: yes
+  shell: /usr/local/ver01/tenginx/sbin/nginx -v 

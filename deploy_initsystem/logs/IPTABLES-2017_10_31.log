@@ -1,0 +1,19 @@
+Using /opt/Ansible/playbook/initsystem/ansible.cfg as config file
+
+PLAY [init  machines] **********************************************************************************************
+
+PLAY [check ALL machines] ******************************************************************************************
+skipping: no hosts matched
+
+PLAY [install TENGINX] *********************************************************************************************
+skipping: no hosts matched
+
+PLAY [setup iptables] **********************************************************************************************
+
+TASK [IPTABLES : restart zabbix_agentd] ****************************************************************************
+fatal: [affiliate_db_01_new]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 54.237.232.245 port 22: Connection timed out\r\n", "unreachable": true}
+	to retry, use: --limit @/opt/Ansible/playbook/initsystem/Functionmenu.retry
+
+PLAY RECAP *********************************************************************************************************
+affiliate_db_01_new        : ok=0    changed=0    unreachable=1    failed=0   
+

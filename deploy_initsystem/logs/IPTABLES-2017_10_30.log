@@ -1,0 +1,303 @@
+Using /opt/Ansible/playbook/initsystem/ansible.cfg as config file
+
+PLAY [init  machines] *************************************************************************************************************************************************
+
+TASK [Gathering Facts] ************************************************************************************************************************************************
+ok: [track_proxy_us_east._02]
+ok: [track_proxy_us_east._04]
+ok: [track_proxy_us_east._05]
+ok: [track_proxy_us_east._03]
+ok: [track_proxy_us_east._01]
+ok: [track_proxy_seoul_03]
+ok: [track_proxy_seoul_02]
+ok: [track_proxy_seoul_01]
+ok: [track_proxy_seoul_04]
+ok: [track_proxy_seoul_05]
+
+PLAY [check ALL machines] *********************************************************************************************************************************************
+skipping: no hosts matched
+
+PLAY [install TENGINX] ************************************************************************************************************************************************
+skipping: no hosts matched
+
+PLAY [setup iptables] *************************************************************************************************************************************************
+
+TASK [IPTABLES : set sshd PermitRootLogin] ****************************************************************************************************************************
+changed: [track_proxy_us_east._04] => (item={u'regexp': u'#PermitRootLogin yes', u'line': u'PermitRootLogin no'}) => {"backup": "", "changed": true, "failed": false, "item": {"line": "PermitRootLogin no", "regexp": "#PermitRootLogin yes"}, "msg": "line replaced"}
+changed: [track_proxy_us_east._05] => (item={u'regexp': u'#PermitRootLogin yes', u'line': u'PermitRootLogin no'}) => {"backup": "", "changed": true, "failed": false, "item": {"line": "PermitRootLogin no", "regexp": "#PermitRootLogin yes"}, "msg": "line replaced"}
+changed: [track_proxy_us_east._02] => (item={u'regexp': u'#PermitRootLogin yes', u'line': u'PermitRootLogin no'}) => {"backup": "", "changed": true, "failed": false, "item": {"line": "PermitRootLogin no", "regexp": "#PermitRootLogin yes"}, "msg": "line replaced"}
+changed: [track_proxy_us_east._01] => (item={u'regexp': u'#PermitRootLogin yes', u'line': u'PermitRootLogin no'}) => {"backup": "", "changed": true, "failed": false, "item": {"line": "PermitRootLogin no", "regexp": "#PermitRootLogin yes"}, "msg": "line replaced"}
+changed: [track_proxy_us_east._03] => (item={u'regexp': u'#PermitRootLogin yes', u'line': u'PermitRootLogin no'}) => {"backup": "", "changed": true, "failed": false, "item": {"line": "PermitRootLogin no", "regexp": "#PermitRootLogin yes"}, "msg": "line replaced"}
+changed: [track_proxy_seoul_03] => (item={u'regexp': u'#PermitRootLogin yes', u'line': u'PermitRootLogin no'}) => {"backup": "", "changed": true, "failed": false, "item": {"line": "PermitRootLogin no", "regexp": "#PermitRootLogin yes"}, "msg": "line replaced"}
+changed: [track_proxy_seoul_01] => (item={u'regexp': u'#PermitRootLogin yes', u'line': u'PermitRootLogin no'}) => {"backup": "", "changed": true, "failed": false, "item": {"line": "PermitRootLogin no", "regexp": "#PermitRootLogin yes"}, "msg": "line replaced"}
+changed: [track_proxy_seoul_02] => (item={u'regexp': u'#PermitRootLogin yes', u'line': u'PermitRootLogin no'}) => {"backup": "", "changed": true, "failed": false, "item": {"line": "PermitRootLogin no", "regexp": "#PermitRootLogin yes"}, "msg": "line replaced"}
+changed: [track_proxy_seoul_04] => (item={u'regexp': u'#PermitRootLogin yes', u'line': u'PermitRootLogin no'}) => {"backup": "", "changed": true, "failed": false, "item": {"line": "PermitRootLogin no", "regexp": "#PermitRootLogin yes"}, "msg": "line replaced"}
+changed: [track_proxy_seoul_05] => (item={u'regexp': u'#PermitRootLogin yes', u'line': u'PermitRootLogin no'}) => {"backup": "", "changed": true, "failed": false, "item": {"line": "PermitRootLogin no", "regexp": "#PermitRootLogin yes"}, "msg": "line replaced"}
+
+TASK [IPTABLES : clear sh file] ***************************************************************************************************************************************
+ok: [track_proxy_us_east._02] => (item=/root/configzabbix.sh) => {"changed": false, "failed": false, "item": "/root/configzabbix.sh", "path": "/root/configzabbix.sh", "state": "absent"}
+ok: [track_proxy_us_east._04] => (item=/root/configzabbix.sh) => {"changed": false, "failed": false, "item": "/root/configzabbix.sh", "path": "/root/configzabbix.sh", "state": "absent"}
+ok: [track_proxy_us_east._05] => (item=/root/configzabbix.sh) => {"changed": false, "failed": false, "item": "/root/configzabbix.sh", "path": "/root/configzabbix.sh", "state": "absent"}
+ok: [track_proxy_us_east._01] => (item=/root/configzabbix.sh) => {"changed": false, "failed": false, "item": "/root/configzabbix.sh", "path": "/root/configzabbix.sh", "state": "absent"}
+ok: [track_proxy_us_east._03] => (item=/root/configzabbix.sh) => {"changed": false, "failed": false, "item": "/root/configzabbix.sh", "path": "/root/configzabbix.sh", "state": "absent"}
+ok: [track_proxy_us_east._02] => (item=/root/zabbix) => {"changed": false, "failed": false, "item": "/root/zabbix", "path": "/root/zabbix", "state": "absent"}
+ok: [track_proxy_us_east._04] => (item=/root/zabbix) => {"changed": false, "failed": false, "item": "/root/zabbix", "path": "/root/zabbix", "state": "absent"}
+ok: [track_proxy_us_east._05] => (item=/root/zabbix) => {"changed": false, "failed": false, "item": "/root/zabbix", "path": "/root/zabbix", "state": "absent"}
+ok: [track_proxy_us_east._01] => (item=/root/zabbix) => {"changed": false, "failed": false, "item": "/root/zabbix", "path": "/root/zabbix", "state": "absent"}
+ok: [track_proxy_us_east._03] => (item=/root/zabbix) => {"changed": false, "failed": false, "item": "/root/zabbix", "path": "/root/zabbix", "state": "absent"}
+ok: [track_proxy_us_east._02] => (item=/root/zabbix.tar.gz) => {"changed": false, "failed": false, "item": "/root/zabbix.tar.gz", "path": "/root/zabbix.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._04] => (item=/root/zabbix.tar.gz) => {"changed": false, "failed": false, "item": "/root/zabbix.tar.gz", "path": "/root/zabbix.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._05] => (item=/root/zabbix.tar.gz) => {"changed": false, "failed": false, "item": "/root/zabbix.tar.gz", "path": "/root/zabbix.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._01] => (item=/root/zabbix.tar.gz) => {"changed": false, "failed": false, "item": "/root/zabbix.tar.gz", "path": "/root/zabbix.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._03] => (item=/root/zabbix.tar.gz) => {"changed": false, "failed": false, "item": "/root/zabbix.tar.gz", "path": "/root/zabbix.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._02] => (item=/root/CMDBClient.tar.gz) => {"changed": false, "failed": false, "item": "/root/CMDBClient.tar.gz", "path": "/root/CMDBClient.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._04] => (item=/root/CMDBClient.tar.gz) => {"changed": false, "failed": false, "item": "/root/CMDBClient.tar.gz", "path": "/root/CMDBClient.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._05] => (item=/root/CMDBClient.tar.gz) => {"changed": false, "failed": false, "item": "/root/CMDBClient.tar.gz", "path": "/root/CMDBClient.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._01] => (item=/root/CMDBClient.tar.gz) => {"changed": false, "failed": false, "item": "/root/CMDBClient.tar.gz", "path": "/root/CMDBClient.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._03] => (item=/root/CMDBClient.tar.gz) => {"changed": false, "failed": false, "item": "/root/CMDBClient.tar.gz", "path": "/root/CMDBClient.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._02] => (item=/root/*.log) => {"changed": false, "failed": false, "item": "/root/*.log", "path": "/root/*.log", "state": "absent"}
+ok: [track_proxy_us_east._04] => (item=/root/*.log) => {"changed": false, "failed": false, "item": "/root/*.log", "path": "/root/*.log", "state": "absent"}
+ok: [track_proxy_us_east._05] => (item=/root/*.log) => {"changed": false, "failed": false, "item": "/root/*.log", "path": "/root/*.log", "state": "absent"}
+ok: [track_proxy_us_east._01] => (item=/root/*.log) => {"changed": false, "failed": false, "item": "/root/*.log", "path": "/root/*.log", "state": "absent"}
+ok: [track_proxy_us_east._03] => (item=/root/*.log) => {"changed": false, "failed": false, "item": "/root/*.log", "path": "/root/*.log", "state": "absent"}
+ok: [track_proxy_us_east._02] => (item=/root/falcon-agent.tar.gz) => {"changed": false, "failed": false, "item": "/root/falcon-agent.tar.gz", "path": "/root/falcon-agent.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._04] => (item=/root/falcon-agent.tar.gz) => {"changed": false, "failed": false, "item": "/root/falcon-agent.tar.gz", "path": "/root/falcon-agent.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._05] => (item=/root/falcon-agent.tar.gz) => {"changed": false, "failed": false, "item": "/root/falcon-agent.tar.gz", "path": "/root/falcon-agent.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._01] => (item=/root/falcon-agent.tar.gz) => {"changed": false, "failed": false, "item": "/root/falcon-agent.tar.gz", "path": "/root/falcon-agent.tar.gz", "state": "absent"}
+ok: [track_proxy_us_east._03] => (item=/root/falcon-agent.tar.gz) => {"changed": false, "failed": false, "item": "/root/falcon-agent.tar.gz", "path": "/root/falcon-agent.tar.gz", "state": "absent"}
+changed: [track_proxy_us_east._02] => (item=/root/db_fio-test.zip) => {"changed": true, "failed": false, "item": "/root/db_fio-test.zip", "path": "/root/db_fio-test.zip", "state": "absent"}
+changed: [track_proxy_us_east._04] => (item=/root/db_fio-test.zip) => {"changed": true, "failed": false, "item": "/root/db_fio-test.zip", "path": "/root/db_fio-test.zip", "state": "absent"}
+changed: [track_proxy_us_east._05] => (item=/root/db_fio-test.zip) => {"changed": true, "failed": false, "item": "/root/db_fio-test.zip", "path": "/root/db_fio-test.zip", "state": "absent"}
+changed: [track_proxy_us_east._01] => (item=/root/db_fio-test.zip) => {"changed": true, "failed": false, "item": "/root/db_fio-test.zip", "path": "/root/db_fio-test.zip", "state": "absent"}
+changed: [track_proxy_us_east._03] => (item=/root/db_fio-test.zip) => {"changed": true, "failed": false, "item": "/root/db_fio-test.zip", "path": "/root/db_fio-test.zip", "state": "absent"}
+changed: [track_proxy_us_east._02] => (item=/root/fio-2.2.8.tar.gz) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8.tar.gz", "path": "/root/fio-2.2.8.tar.gz", "state": "absent"}
+changed: [track_proxy_us_east._04] => (item=/root/fio-2.2.8.tar.gz) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8.tar.gz", "path": "/root/fio-2.2.8.tar.gz", "state": "absent"}
+changed: [track_proxy_us_east._05] => (item=/root/fio-2.2.8.tar.gz) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8.tar.gz", "path": "/root/fio-2.2.8.tar.gz", "state": "absent"}
+changed: [track_proxy_us_east._01] => (item=/root/fio-2.2.8.tar.gz) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8.tar.gz", "path": "/root/fio-2.2.8.tar.gz", "state": "absent"}
+changed: [track_proxy_us_east._03] => (item=/root/fio-2.2.8.tar.gz) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8.tar.gz", "path": "/root/fio-2.2.8.tar.gz", "state": "absent"}
+changed: [track_proxy_us_east._02] => (item=/root/fio-2.2.8) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8", "path": "/root/fio-2.2.8", "state": "absent"}
+changed: [track_proxy_us_east._04] => (item=/root/fio-2.2.8) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8", "path": "/root/fio-2.2.8", "state": "absent"}
+changed: [track_proxy_us_east._05] => (item=/root/fio-2.2.8) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8", "path": "/root/fio-2.2.8", "state": "absent"}
+changed: [track_proxy_us_east._01] => (item=/root/fio-2.2.8) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8", "path": "/root/fio-2.2.8", "state": "absent"}
+changed: [track_proxy_us_east._03] => (item=/root/fio-2.2.8) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8", "path": "/root/fio-2.2.8", "state": "absent"}
+ok: [track_proxy_us_east._04] => (item=/root/MegaSAS.log) => {"changed": false, "failed": false, "item": "/root/MegaSAS.log", "path": "/root/MegaSAS.log", "state": "absent"}
+ok: [track_proxy_us_east._05] => (item=/root/MegaSAS.log) => {"changed": false, "failed": false, "item": "/root/MegaSAS.log", "path": "/root/MegaSAS.log", "state": "absent"}
+ok: [track_proxy_us_east._02] => (item=/root/MegaSAS.log) => {"changed": false, "failed": false, "item": "/root/MegaSAS.log", "path": "/root/MegaSAS.log", "state": "absent"}
+ok: [track_proxy_us_east._01] => (item=/root/MegaSAS.log) => {"changed": false, "failed": false, "item": "/root/MegaSAS.log", "path": "/root/MegaSAS.log", "state": "absent"}
+ok: [track_proxy_us_east._03] => (item=/root/MegaSAS.log) => {"changed": false, "failed": false, "item": "/root/MegaSAS.log", "path": "/root/MegaSAS.log", "state": "absent"}
+ok: [track_proxy_us_east._04] => (item=/root/*.sh) => {"changed": false, "failed": false, "item": "/root/*.sh", "path": "/root/*.sh", "state": "absent"}
+ok: [track_proxy_us_east._05] => (item=/root/*.sh) => {"changed": false, "failed": false, "item": "/root/*.sh", "path": "/root/*.sh", "state": "absent"}
+ok: [track_proxy_us_east._02] => (item=/root/*.sh) => {"changed": false, "failed": false, "item": "/root/*.sh", "path": "/root/*.sh", "state": "absent"}
+ok: [track_proxy_us_east._01] => (item=/root/*.sh) => {"changed": false, "failed": false, "item": "/root/*.sh", "path": "/root/*.sh", "state": "absent"}
+ok: [track_proxy_seoul_01] => (item=/root/configzabbix.sh) => {"changed": false, "failed": false, "item": "/root/configzabbix.sh", "path": "/root/configzabbix.sh", "state": "absent"}
+ok: [track_proxy_seoul_03] => (item=/root/configzabbix.sh) => {"changed": false, "failed": false, "item": "/root/configzabbix.sh", "path": "/root/configzabbix.sh", "state": "absent"}
+ok: [track_proxy_seoul_02] => (item=/root/configzabbix.sh) => {"changed": false, "failed": false, "item": "/root/configzabbix.sh", "path": "/root/configzabbix.sh", "state": "absent"}
+ok: [track_proxy_us_east._03] => (item=/root/*.sh) => {"changed": false, "failed": false, "item": "/root/*.sh", "path": "/root/*.sh", "state": "absent"}
+ok: [track_proxy_seoul_01] => (item=/root/zabbix) => {"changed": false, "failed": false, "item": "/root/zabbix", "path": "/root/zabbix", "state": "absent"}
+ok: [track_proxy_seoul_03] => (item=/root/zabbix) => {"changed": false, "failed": false, "item": "/root/zabbix", "path": "/root/zabbix", "state": "absent"}
+ok: [track_proxy_seoul_02] => (item=/root/zabbix) => {"changed": false, "failed": false, "item": "/root/zabbix", "path": "/root/zabbix", "state": "absent"}
+ok: [track_proxy_seoul_04] => (item=/root/configzabbix.sh) => {"changed": false, "failed": false, "item": "/root/configzabbix.sh", "path": "/root/configzabbix.sh", "state": "absent"}
+ok: [track_proxy_seoul_01] => (item=/root/zabbix.tar.gz) => {"changed": false, "failed": false, "item": "/root/zabbix.tar.gz", "path": "/root/zabbix.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_03] => (item=/root/zabbix.tar.gz) => {"changed": false, "failed": false, "item": "/root/zabbix.tar.gz", "path": "/root/zabbix.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_02] => (item=/root/zabbix.tar.gz) => {"changed": false, "failed": false, "item": "/root/zabbix.tar.gz", "path": "/root/zabbix.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_05] => (item=/root/configzabbix.sh) => {"changed": false, "failed": false, "item": "/root/configzabbix.sh", "path": "/root/configzabbix.sh", "state": "absent"}
+ok: [track_proxy_seoul_04] => (item=/root/zabbix) => {"changed": false, "failed": false, "item": "/root/zabbix", "path": "/root/zabbix", "state": "absent"}
+ok: [track_proxy_seoul_01] => (item=/root/CMDBClient.tar.gz) => {"changed": false, "failed": false, "item": "/root/CMDBClient.tar.gz", "path": "/root/CMDBClient.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_03] => (item=/root/CMDBClient.tar.gz) => {"changed": false, "failed": false, "item": "/root/CMDBClient.tar.gz", "path": "/root/CMDBClient.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_02] => (item=/root/CMDBClient.tar.gz) => {"changed": false, "failed": false, "item": "/root/CMDBClient.tar.gz", "path": "/root/CMDBClient.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_05] => (item=/root/zabbix) => {"changed": false, "failed": false, "item": "/root/zabbix", "path": "/root/zabbix", "state": "absent"}
+ok: [track_proxy_seoul_01] => (item=/root/*.log) => {"changed": false, "failed": false, "item": "/root/*.log", "path": "/root/*.log", "state": "absent"}
+ok: [track_proxy_seoul_04] => (item=/root/zabbix.tar.gz) => {"changed": false, "failed": false, "item": "/root/zabbix.tar.gz", "path": "/root/zabbix.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_03] => (item=/root/*.log) => {"changed": false, "failed": false, "item": "/root/*.log", "path": "/root/*.log", "state": "absent"}
+ok: [track_proxy_seoul_02] => (item=/root/*.log) => {"changed": false, "failed": false, "item": "/root/*.log", "path": "/root/*.log", "state": "absent"}
+ok: [track_proxy_seoul_05] => (item=/root/zabbix.tar.gz) => {"changed": false, "failed": false, "item": "/root/zabbix.tar.gz", "path": "/root/zabbix.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_01] => (item=/root/falcon-agent.tar.gz) => {"changed": false, "failed": false, "item": "/root/falcon-agent.tar.gz", "path": "/root/falcon-agent.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_04] => (item=/root/CMDBClient.tar.gz) => {"changed": false, "failed": false, "item": "/root/CMDBClient.tar.gz", "path": "/root/CMDBClient.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_03] => (item=/root/falcon-agent.tar.gz) => {"changed": false, "failed": false, "item": "/root/falcon-agent.tar.gz", "path": "/root/falcon-agent.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_02] => (item=/root/falcon-agent.tar.gz) => {"changed": false, "failed": false, "item": "/root/falcon-agent.tar.gz", "path": "/root/falcon-agent.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_05] => (item=/root/CMDBClient.tar.gz) => {"changed": false, "failed": false, "item": "/root/CMDBClient.tar.gz", "path": "/root/CMDBClient.tar.gz", "state": "absent"}
+changed: [track_proxy_seoul_01] => (item=/root/db_fio-test.zip) => {"changed": true, "failed": false, "item": "/root/db_fio-test.zip", "path": "/root/db_fio-test.zip", "state": "absent"}
+ok: [track_proxy_seoul_04] => (item=/root/*.log) => {"changed": false, "failed": false, "item": "/root/*.log", "path": "/root/*.log", "state": "absent"}
+ok: [track_proxy_seoul_03] => (item=/root/db_fio-test.zip) => {"changed": false, "failed": false, "item": "/root/db_fio-test.zip", "path": "/root/db_fio-test.zip", "state": "absent"}
+ok: [track_proxy_seoul_02] => (item=/root/db_fio-test.zip) => {"changed": false, "failed": false, "item": "/root/db_fio-test.zip", "path": "/root/db_fio-test.zip", "state": "absent"}
+ok: [track_proxy_seoul_05] => (item=/root/*.log) => {"changed": false, "failed": false, "item": "/root/*.log", "path": "/root/*.log", "state": "absent"}
+changed: [track_proxy_seoul_01] => (item=/root/fio-2.2.8.tar.gz) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8.tar.gz", "path": "/root/fio-2.2.8.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_04] => (item=/root/falcon-agent.tar.gz) => {"changed": false, "failed": false, "item": "/root/falcon-agent.tar.gz", "path": "/root/falcon-agent.tar.gz", "state": "absent"}
+changed: [track_proxy_seoul_03] => (item=/root/fio-2.2.8.tar.gz) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8.tar.gz", "path": "/root/fio-2.2.8.tar.gz", "state": "absent"}
+changed: [track_proxy_seoul_02] => (item=/root/fio-2.2.8.tar.gz) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8.tar.gz", "path": "/root/fio-2.2.8.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_05] => (item=/root/falcon-agent.tar.gz) => {"changed": false, "failed": false, "item": "/root/falcon-agent.tar.gz", "path": "/root/falcon-agent.tar.gz", "state": "absent"}
+changed: [track_proxy_seoul_01] => (item=/root/fio-2.2.8) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8", "path": "/root/fio-2.2.8", "state": "absent"}
+ok: [track_proxy_seoul_04] => (item=/root/db_fio-test.zip) => {"changed": false, "failed": false, "item": "/root/db_fio-test.zip", "path": "/root/db_fio-test.zip", "state": "absent"}
+ok: [track_proxy_seoul_03] => (item=/root/fio-2.2.8) => {"changed": false, "failed": false, "item": "/root/fio-2.2.8", "path": "/root/fio-2.2.8", "state": "absent"}
+ok: [track_proxy_seoul_02] => (item=/root/fio-2.2.8) => {"changed": false, "failed": false, "item": "/root/fio-2.2.8", "path": "/root/fio-2.2.8", "state": "absent"}
+changed: [track_proxy_seoul_05] => (item=/root/db_fio-test.zip) => {"changed": true, "failed": false, "item": "/root/db_fio-test.zip", "path": "/root/db_fio-test.zip", "state": "absent"}
+ok: [track_proxy_seoul_01] => (item=/root/MegaSAS.log) => {"changed": false, "failed": false, "item": "/root/MegaSAS.log", "path": "/root/MegaSAS.log", "state": "absent"}
+changed: [track_proxy_seoul_04] => (item=/root/fio-2.2.8.tar.gz) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8.tar.gz", "path": "/root/fio-2.2.8.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_03] => (item=/root/MegaSAS.log) => {"changed": false, "failed": false, "item": "/root/MegaSAS.log", "path": "/root/MegaSAS.log", "state": "absent"}
+ok: [track_proxy_seoul_02] => (item=/root/MegaSAS.log) => {"changed": false, "failed": false, "item": "/root/MegaSAS.log", "path": "/root/MegaSAS.log", "state": "absent"}
+changed: [track_proxy_seoul_05] => (item=/root/fio-2.2.8.tar.gz) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8.tar.gz", "path": "/root/fio-2.2.8.tar.gz", "state": "absent"}
+ok: [track_proxy_seoul_01] => (item=/root/*.sh) => {"changed": false, "failed": false, "item": "/root/*.sh", "path": "/root/*.sh", "state": "absent"}
+ok: [track_proxy_seoul_04] => (item=/root/fio-2.2.8) => {"changed": false, "failed": false, "item": "/root/fio-2.2.8", "path": "/root/fio-2.2.8", "state": "absent"}
+ok: [track_proxy_seoul_03] => (item=/root/*.sh) => {"changed": false, "failed": false, "item": "/root/*.sh", "path": "/root/*.sh", "state": "absent"}
+ok: [track_proxy_seoul_02] => (item=/root/*.sh) => {"changed": false, "failed": false, "item": "/root/*.sh", "path": "/root/*.sh", "state": "absent"}
+changed: [track_proxy_seoul_05] => (item=/root/fio-2.2.8) => {"changed": true, "failed": false, "item": "/root/fio-2.2.8", "path": "/root/fio-2.2.8", "state": "absent"}
+ok: [track_proxy_seoul_04] => (item=/root/MegaSAS.log) => {"changed": false, "failed": false, "item": "/root/MegaSAS.log", "path": "/root/MegaSAS.log", "state": "absent"}
+ok: [track_proxy_seoul_05] => (item=/root/MegaSAS.log) => {"changed": false, "failed": false, "item": "/root/MegaSAS.log", "path": "/root/MegaSAS.log", "state": "absent"}
+ok: [track_proxy_seoul_04] => (item=/root/*.sh) => {"changed": false, "failed": false, "item": "/root/*.sh", "path": "/root/*.sh", "state": "absent"}
+ok: [track_proxy_seoul_05] => (item=/root/*.sh) => {"changed": false, "failed": false, "item": "/root/*.sh", "path": "/root/*.sh", "state": "absent"}
+
+TASK [IPTABLES : configWEB iptables] **********************************************************************************************************************************
+changed: [track_proxy_us_east._02] => {"changed": true, "failed": false, "rc": 0, "stderr": "Shared connection to 52.203.251.198 closed.\r\n", "stdout": "", "stdout_lines": []}
+changed: [track_proxy_us_east._04] => {"changed": true, "failed": false, "rc": 0, "stderr": "Shared connection to 204.236.213.169 closed.\r\n", "stdout": "", "stdout_lines": []}
+changed: [track_proxy_us_east._05] => {"changed": true, "failed": false, "rc": 0, "stderr": "Shared connection to 54.152.127.250 closed.\r\n", "stdout": "", "stdout_lines": []}
+changed: [track_proxy_us_east._01] => {"changed": true, "failed": false, "rc": 0, "stderr": "Shared connection to 54.87.197.20 closed.\r\n", "stdout": "", "stdout_lines": []}
+changed: [track_proxy_us_east._03] => {"changed": true, "failed": false, "rc": 0, "stderr": "Shared connection to 34.227.107.26 closed.\r\n", "stdout": "", "stdout_lines": []}
+changed: [track_proxy_seoul_01] => {"changed": true, "failed": false, "rc": 0, "stderr": "Shared connection to 13.124.188.72 closed.\r\n", "stdout": "", "stdout_lines": []}
+changed: [track_proxy_seoul_03] => {"changed": true, "failed": false, "rc": 0, "stderr": "Shared connection to 52.79.39.2 closed.\r\n", "stdout": "", "stdout_lines": []}
+changed: [track_proxy_seoul_02] => {"changed": true, "failed": false, "rc": 0, "stderr": "Shared connection to 52.78.44.50 closed.\r\n", "stdout": "", "stdout_lines": []}
+changed: [track_proxy_seoul_04] => {"changed": true, "failed": false, "rc": 0, "stderr": "Shared connection to 13.125.40.63 closed.\r\n", "stdout": "", "stdout_lines": []}
+changed: [track_proxy_seoul_05] => {"changed": true, "failed": false, "rc": 0, "stderr": "Shared connection to 13.125.54.21 closed.\r\n", "stdout": "", "stdout_lines": []}
+
+TASK [IPTABLES : configDB iptables] ***********************************************************************************************************************************
+skipping: [track_proxy_us_east._01] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}
+skipping: [track_proxy_us_east._02] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}
+skipping: [track_proxy_us_east._03] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}
+skipping: [track_proxy_us_east._04] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}
+skipping: [track_proxy_us_east._05] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}
+skipping: [track_proxy_seoul_01] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}
+skipping: [track_proxy_seoul_02] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}
+skipping: [track_proxy_seoul_03] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}
+skipping: [track_proxy_seoul_04] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}
+skipping: [track_proxy_seoul_05] => {"changed": false, "skip_reason": "Conditional result was False", "skipped": true}
+
+TASK [IPTABLES : restart zabbix_agentd] *******************************************************************************************************************************
+changed: [track_proxy_us_east._02] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_us_east._04] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_us_east._05] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_us_east._03] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_us_east._01] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_seoul_01] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+fatal: [track_proxy_seoul_03]: FAILED! => {"changed": false, "failed": true, "msg": "Could not find the requested service zabbix_agentd: host"}
+fatal: [track_proxy_seoul_04]: FAILED! => {"changed": false, "failed": true, "msg": "Could not find the requested service zabbix_agentd: host"}
+fatal: [track_proxy_seoul_02]: FAILED! => {"changed": false, "failed": true, "msg": "Could not find the requested service zabbix_agentd: host"}
+changed: [track_proxy_seoul_05] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+
+TASK [IPTABLES : restart sshd] ****************************************************************************************************************************************
+changed: [track_proxy_us_east._05] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_us_east._04] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_us_east._02] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_us_east._03] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_us_east._01] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_seoul_01] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_seoul_05] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+	to retry, use: --limit @/opt/Ansible/playbook/initsystem/Functionmenu.retry
+
+PLAY RECAP ************************************************************************************************************************************************************
+track_proxy_seoul_01       : ok=6    changed=5    unreachable=0    failed=0   
+track_proxy_seoul_02       : ok=4    changed=3    unreachable=0    failed=1   
+track_proxy_seoul_03       : ok=4    changed=3    unreachable=0    failed=1   
+track_proxy_seoul_04       : ok=4    changed=3    unreachable=0    failed=1   
+track_proxy_seoul_05       : ok=6    changed=5    unreachable=0    failed=0   
+track_proxy_us_east._01    : ok=6    changed=5    unreachable=0    failed=0   
+track_proxy_us_east._02    : ok=6    changed=5    unreachable=0    failed=0   
+track_proxy_us_east._03    : ok=6    changed=5    unreachable=0    failed=0   
+track_proxy_us_east._04    : ok=6    changed=5    unreachable=0    failed=0   
+track_proxy_us_east._05    : ok=6    changed=5    unreachable=0    failed=0   
+
+Using /opt/Ansible/playbook/initsystem/ansible.cfg as config file
+
+PLAY [init  machines] *************************************************************************************************************************************************
+
+PLAY [check ALL machines] *********************************************************************************************************************************************
+skipping: no hosts matched
+
+PLAY [install TENGINX] ************************************************************************************************************************************************
+skipping: no hosts matched
+
+PLAY [setup iptables] *************************************************************************************************************************************************
+
+TASK [IPTABLES : restart zabbix_agentd] *******************************************************************************************************************************
+changed: [track_proxy_us_east._01] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_us_east._05] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_us_east._03] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_us_east._02] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_us_east._04] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+fatal: [track_proxy_seoul_03]: FAILED! => {"changed": false, "failed": true, "msg": "Could not find the requested service zabbix_agentd: host"}
+changed: [track_proxy_seoul_01] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+fatal: [track_proxy_seoul_04]: FAILED! => {"changed": false, "failed": true, "msg": "Could not find the requested service zabbix_agentd: host"}
+fatal: [track_proxy_seoul_02]: FAILED! => {"changed": false, "failed": true, "msg": "Could not find the requested service zabbix_agentd: host"}
+changed: [track_proxy_seoul_05] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+
+TASK [IPTABLES : restart sshd] ****************************************************************************************************************************************
+changed: [track_proxy_us_east._01] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_us_east._04] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_us_east._02] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_us_east._05] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_us_east._03] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_seoul_01] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_seoul_05] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+	to retry, use: --limit @/opt/Ansible/playbook/initsystem/Functionmenu.retry
+
+PLAY RECAP ************************************************************************************************************************************************************
+track_proxy_seoul_01       : ok=2    changed=2    unreachable=0    failed=0   
+track_proxy_seoul_02       : ok=0    changed=0    unreachable=0    failed=1   
+track_proxy_seoul_03       : ok=0    changed=0    unreachable=0    failed=1   
+track_proxy_seoul_04       : ok=0    changed=0    unreachable=0    failed=1   
+track_proxy_seoul_05       : ok=2    changed=2    unreachable=0    failed=0   
+track_proxy_us_east._01    : ok=2    changed=2    unreachable=0    failed=0   
+track_proxy_us_east._02    : ok=2    changed=2    unreachable=0    failed=0   
+track_proxy_us_east._03    : ok=2    changed=2    unreachable=0    failed=0   
+track_proxy_us_east._04    : ok=2    changed=2    unreachable=0    failed=0   
+track_proxy_us_east._05    : ok=2    changed=2    unreachable=0    failed=0   
+
+Using /opt/Ansible/playbook/initsystem/ansible.cfg as config file
+
+PLAY [init  machines] *************************************************************************************************************************************************
+
+PLAY [check ALL machines] *********************************************************************************************************************************************
+skipping: no hosts matched
+
+PLAY [install TENGINX] ************************************************************************************************************************************************
+skipping: no hosts matched
+
+PLAY [setup iptables] *************************************************************************************************************************************************
+
+TASK [IPTABLES : restart zabbix_agentd] *******************************************************************************************************************************
+changed: [track_proxy_us_east._05] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_us_east._04] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_us_east._02] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_us_east._03] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_us_east._01] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+changed: [track_proxy_seoul_01] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+fatal: [track_proxy_seoul_04]: FAILED! => {"changed": false, "failed": true, "msg": "Could not find the requested service zabbix_agentd: host"}
+...ignoring
+fatal: [track_proxy_seoul_02]: FAILED! => {"changed": false, "failed": true, "msg": "Could not find the requested service zabbix_agentd: host"}
+...ignoring
+fatal: [track_proxy_seoul_03]: FAILED! => {"changed": false, "failed": true, "msg": "Could not find the requested service zabbix_agentd: host"}
+...ignoring
+changed: [track_proxy_seoul_05] => {"changed": true, "failed": false, "name": "zabbix_agentd", "state": "started"}
+
+TASK [IPTABLES : restart sshd] ****************************************************************************************************************************************
+changed: [track_proxy_us_east._05] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_us_east._04] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_us_east._02] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_us_east._03] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_us_east._01] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_seoul_01] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_seoul_02] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_seoul_03] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_seoul_04] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+changed: [track_proxy_seoul_05] => {"changed": true, "failed": false, "name": "sshd", "state": "started"}
+
+PLAY RECAP ************************************************************************************************************************************************************
+track_proxy_seoul_01       : ok=2    changed=2    unreachable=0    failed=0   
+track_proxy_seoul_02       : ok=2    changed=1    unreachable=0    failed=0   
+track_proxy_seoul_03       : ok=2    changed=1    unreachable=0    failed=0   
+track_proxy_seoul_04       : ok=2    changed=1    unreachable=0    failed=0   
+track_proxy_seoul_05       : ok=2    changed=2    unreachable=0    failed=0   
+track_proxy_us_east._01    : ok=2    changed=2    unreachable=0    failed=0   
+track_proxy_us_east._02    : ok=2    changed=2    unreachable=0    failed=0   
+track_proxy_us_east._03    : ok=2    changed=2    unreachable=0    failed=0   
+track_proxy_us_east._04    : ok=2    changed=2    unreachable=0    failed=0   
+track_proxy_us_east._05    : ok=2    changed=2    unreachable=0    failed=0   
+

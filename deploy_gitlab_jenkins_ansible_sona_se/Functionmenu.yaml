@@ -1,0 +1,95 @@
+---
+
+
+
+#1.INSTALL LAMP
+- name: INSTALL  LAMP
+  sudo: yes
+  hosts: 
+   - LAMP
+  remote_user: root
+  gather_facts: True
+  roles:
+    - LAMP
+  tags:
+   - LAMP
+
+#2.INSTALL TENGINX
+- name: INSTALL TENGINX
+  sudo: yes
+  hosts:
+   - TENGINX
+  remote_user: root
+  gather_facts: False
+  roles:
+    - TENGINX
+  tags:
+   - TENGINX
+#3.INSTALL REDIS
+- name: INSTALL REDIS
+  sudo: yes
+  hosts:
+   - REDIS
+  remote_user: root
+  gather_facts: False
+  roles:
+    - REDIS
+  tags:
+   - REDIS
+
+#4.INSTALL SPHINX
+- name: INSTALL SPHINX
+  sudo: yes
+  hosts:
+   - SPHINX
+  remote_user: root
+  gather_facts: True
+  roles:
+    - SPHINX
+  tags:
+   - SPHINX
+
+
+
+
+#5.INSTALL HAPROXY
+- name: INSTALL HAPROXY
+  sudo: yes
+  hosts:
+   - HAPROXY
+  remote_user: zeusadmin
+  gather_facts: True
+  roles:
+    - HAPROXY
+  tags:
+   - HAPROXY
+
+#6.INSTALL SQUID
+- name: INSTALL SQUID
+  sudo: yes
+  hosts:
+   - SQUID
+  remote_user: zeusadmin
+  gather_facts: True
+  roles:
+    - SQUID
+  tags:
+   - SQUID
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

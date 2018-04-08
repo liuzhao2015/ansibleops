@@ -1,0 +1,90 @@
+---
+
+- name: clear install file
+  sudo: yes
+  file: path={{ item }} state=absent
+  with_items:
+    - /root/haproxy-1.5.8.tar.gz
+    - /root/haproxy-1.5.8
+    - /usr/local/haproxy/sbin/haproxy
+
+
+#CENTOS 6
+- name: yum install  common file to CENTOS 6
+  yum: name={{ item }} state=latest
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "6"
+  with_items:
+    - [ 'openssl-devel','gcc-c++','gcc','make' ]
+    - [ 'perl','perl-devel','db4-utils','postfix' ]
+    - [ 'dos2unix','unzip','pcre-devel','telnet' ]
+    - [ 'ncurses-devel','vsftpd','net-snmp'  ]
+    - [ 'sysstat','lrzsz','vim-enhanced','libselinux-python' ]
+    - [ 'lsscsi','redhat-lsb-core','pciutils','parted','smartmontools','dmidecode' ]
+
+
+#CENTOS 7
+- name: yum install  common file to CENTOS 7
+  yum: name={{ item }} state=latest
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+  with_items:
+    - [ 'openssl-devel','gcc-c++','gcc','make' ]
+    - [ 'perl','perl-devel','postfix','telnet' ]
+    - [ 'dos2unix','unzip','pcre-devel','iptables','iptables-services']
+    - [ 'ncurses-devel','vsftpd','libdb-utils','net-snmp'  ]
+    - [ 'sysstat','lrzsz','vim-enhanced','libselinux-python' ]
+    - [ 'lsscsi','redhat-lsb-core','pciutils','parted','smartmontools','dmidecode' ]
+
+
+
+
+
+- name: add user haproxy
+  user: name={{ haproxy_user }} comment="zend user" shell=/sbin/nologin
+  tags: adduser
+
+
+- name: copy haproxy-1.5.8.tar.gz to /root/.
+  sudo: yes
+  copy: src=files/{{ item }}  dest=/root/  owner=root group=root mode=0700 force=yes
+  with_items: 
+    - haproxy-1.5.8.tar.gz
+
+
+
+- name: unarchive haproxy-1.5.8.tar.gz files
+  unarchive: copy=no  src={{ item.src }}  dest={{ item.dest  }} owner=root group=root mode=0755
+  with_items:
+     - { src: '/root/haproxy-1.5.8.tar.gz',     dest: '/root/' }
+
+
+- name: make haproxy
+  sudo: yes
+  shell: cd /root/haproxy-1.5.8/;make TARGET=linux26 USE_OPENSSL=1 ADDLIB=-lz;
+#  make: chdir=/root/haproxy-1.5.8  target=linux26  USE_OPENSSL=1 ADDLIB=-lz 
+    
+- name: make install  haproxy
+  sudo: yes
+  make: chdir=/root/haproxy-1.5.8 target={{ item }}
+  with_items:
+   - "install"
+
+- name: copy haproxy.cfg to /usr/local/haproxy/.
+  sudo: yes
+  copy: src=files/{{ item }}  dest=/usr/local/haproxy/  owner=root group=root mode=0700 force=yes
+  with_items:
+    - haproxy.cfg
+
+
+
+- name: run haproxy
+  sudo: yes
+  shell: source /etc/profile>/dev/null && /usr/local/sbin/haproxy -f /usr/local/haproxy/haproxy.cfg -D
+
+
+
+- name: clear sh file
+  sudo: yes
+  file: path={{ item }} state=absent
+  with_items:
+    - /root/haproxy-1.5.8.tar.gz
+    - /root/haproxy-1.5.8

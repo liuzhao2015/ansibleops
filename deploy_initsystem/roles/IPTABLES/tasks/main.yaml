@@ -1,0 +1,72 @@
+---
+
+
+- name: set sshd PermitRootLogin
+  lineinfile: dest=/etc/ssh/sshd_config  regexp='{{item.regexp}}'    state=present line='{{item.line}}'
+  become: yes
+  with_items:
+    - { regexp: '#PermitRootLogin yes', line: 'PermitRootLogin no'  }
+
+
+- name: clear sh file
+  become: yes
+  file: path={{ item }} state=absent
+  with_items:
+    - /root/configzabbix.sh
+    - /root/zabbix
+    - /root/zabbix.tar.gz
+    - /root/CMDBClient.tar.gz
+    - /root/*.log
+    - /root/falcon-agent.tar.gz
+    - /root/db_fio-test.zip
+    - /root/fio-2.2.8.tar.gz
+    - /root/fio-2.2.8
+    - /root/MegaSAS.log
+    - /root/*.sh
+
+
+- name: iptables -F.
+  become: yes
+  shell: service iptables save && service iptables restart
+  ignore_errors: yes
+
+- name: configWEB iptables
+  become: yes
+  script: scripts/iptables.sh
+  when:  "'WEB' in group_names"
+  ignore_errors: yes
+  tags: configiptables 
+
+- name: configWEB iptables
+  become: yes
+  script: scripts/new_iptables.sh
+  when:  "'WEB' in group_names"
+  ignore_errors: yes
+  tags: confignewiptables
+
+
+
+
+
+
+- name: configDB iptables
+  become: yes
+  script: scripts/iptables-db.sh
+  when:  "'DB' in group_names"
+  ignore_errors: yes
+  tags: configiptables
+
+
+
+- name: service iptables save and restart.
+  become: yes
+  shell: service iptables save && service iptables restart
+
+
+- name: restart zabbix_agentd
+  service: name=zabbix_agentd state=restarted
+  ignore_errors: yes
+
+- name: restart sshd
+  service: name=sshd state=restarted
+

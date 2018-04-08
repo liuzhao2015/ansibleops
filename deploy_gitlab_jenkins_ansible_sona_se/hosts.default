@@ -1,0 +1,12 @@
+[WEB]
+#web01 192.168.98.135
+#web01 ansible_ssh_host=50.23.185.6  ansible_ssh_user="liuzhao" ansible_ssh_pass="liuzhao1234T" ansible_ssh_port="22"
+web01 ansible_ssh_host=192.168.98.146  ansible_ssh_user="root" ansible_ssh_pass="admin" ansible_ssh_port="22"
+
+
+[DB]
+#gamiss_db_e_01_new   ansible_ssh_host=ec2-52-2-29-61.compute-1.amazonaws.com  ansible_ssh_user="centos" ansible_ssh_private_key_file=ssh_keys/DBkey.pem  ansible_ssh_port="22"
+#yoshop_haproxy_DB_01_new ansible_ssh_host=34.236.225.15  ansible_ssh_user="centos" ansible_ssh_private_key_file=ssh_keys/DBkey.pem ansible_ssh_port="22"
+
+[TENGINX]
+web01 ansible_ssh_host=192.168.98.147  ansible_ssh_user="root" ansible_ssh_pass="admin" ansible_ssh_port="22"

@@ -1,0 +1,28 @@
+---
+- name: check WEB machines
+  sudo: yes
+  hosts: 
+   - web
+#   - db
+  remote_user: root
+  gather_facts: False
+  roles:
+    - initsystem
+#    - check
+
+
+##- name: check WEB machines
+#  hosts: web
+#  remote_user: liuzhao
+#  gather_facts: True
+#  roles:
+#    - check
+#
+#
+#- name: check WEB machines
+#  hosts: db
+#  remote_user: liuzhao
+#  gather_facts: True
+#  roles:
+#    - check
+#

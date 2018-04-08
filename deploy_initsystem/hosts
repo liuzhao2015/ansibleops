@@ -1,0 +1,24 @@
+[WEB]
+#北京
+#chinabrands_cluster_01 ansible_ssh_host=52.80.29.248   ansible_ssh_user="centos" ansible_ssh_private_key_file=ssh_keys/cn-north-1.pem ansible_ssh_port="22"
+#mq03.globalegrow.com ansible_ssh_host=75.126.215.7    ansible_ssh_user="root" ansible_ssh_pass="XR7XD6qp"  ansible_ssh_port="22" jifang=SOFTLAYER
+#mq04.globalegrow.com ansible_ssh_host=75.126.215.13   ansible_ssh_user="root" ansible_ssh_pass="Fsc35Hfv" ansible_ssh_port="22"  jifang=SOFTLAYER
+75.126.54.98 ansible_ssh_host=75.126.54.98   ansible_ssh_user="root" ansible_ssh_pass="Jg82Dfs8" ansible_ssh_port="22"  jifang=SOFTLAYER
+54.227.1.205 ansible_ssh_host=54.227.1.205   ansible_ssh_user="centos" ansible_ssh_private_key_file=ssh_keys/gc_pci.pem ansible_ssh_port="22" jifang=AWS
+169.60.30.166 ansible_ssh_host=169.60.30.166   ansible_ssh_user="zeusadmin" ansible_ssh_pass="hH3S2kxVNU4sbCfh" ansible_ssh_port="22"  jifang=SOFTLAYER
+#54.144.48.218 ansible_ssh_host=54.144.48.218   ansible_ssh_user="centos" ansible_ssh_private_key_file=ssh_keys/gc_pci.pem ansible_ssh_port="22"
+[DB]
+#gamiss_db_e_01_new   ansible_ssh_host=ec2-52-2-29-61.compute-1.amazonaws.com  ansible_ssh_user="centos" ansible_ssh_private_key_file=ssh_keys/DBkey.pem  ansible_ssh_port="22"
+#affiliate_db_01_new   ansible_ssh_host=34.236.222.140  ansible_ssh_user="centos" ansible_ssh_private_key_file=ssh_keys/DBkey.pem  ansible_ssh_port="22"
+
+[check]
+#10.40.1.130
+
+
+
+
+[TENGINX]
+ #ansible_ssh_host=35.156.63.62  ansible_ssh_user="centos" ansible_ssh_private_key_file=ssh_keys/ads_X.pem ansible_ssh_port="22"
+
+[windows]
+#54.169.207.0 ansible_ssh_user="Administrator" ansible_ssh_pass="oW9-aJ4KXa3" ansible_ssh_port=5985 ansible_connection="winrm" ansible_winrm_server_cert_validation=ignore

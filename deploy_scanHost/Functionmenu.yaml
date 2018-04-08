@@ -1,0 +1,21 @@
+---
+
+
+#1.scanhost
+- name: scanhost
+  sudo: yes
+  hosts: 
+   - AWS
+  remote_user: root
+  gather_facts: False
+  roles:
+   - scanhost
+  tags:
+   - scanhost
+
+
+
+
+
+
+

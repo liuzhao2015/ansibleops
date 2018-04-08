@@ -1,0 +1,98 @@
+---
+
+
+- name: stop tenginx
+  sudo: yes
+  shell: /usr/local/ver01/tengine/sbin/nginx -s stop 
+  ignore_errors: yes
+
+- name: delete deploy file
+  sudo: yes
+  file: path=/usr/local/ver01/tengine  state=ansent
+  ignore_errors: yes
+
+
+
+- name: install libselinux-python dos2unix.
+  sudo: yes
+  shell: /usr/bin/yum -y install libselinux-python dos2unix
+  with_items: 
+    - libselinux-python
+    - dos2unix
+
+- name: copy system_init.sh to /root/.
+  sudo: yes
+  copy: src=files/{{ item }}  dest=/root/  owner=root group=root mode=0700 force=yes
+  with_items: 
+    - install_tengine.zip
+
+- name: unarchive monit files
+  sudo: yes
+  unarchive: copy=no  src={{ item.src }}  dest={{ item.dest  }} owner=root group=root mode=0755
+  with_items:
+     - { src: '/root/install_tengine.zip',     dest: '/root/' }
+
+- name: DOS2UNIX
+  sudo: yes
+  shell: "{{ item }}" 
+  with_items: 
+    - dos2unix -R /root/install_tengine/*
+  ignore_errors: yes  
+
+- name: start execute shell scripts install TENGINX.
+  sudo: yes
+  shell: "{{ item }}"
+  with_items:
+    - cd /root/install_tengine && /bin/bash -x install_tengine.sh
+
+- name: rm default server.conf
+  sudo: yes
+  file: path={{ item }} state=absent
+  with_items:
+    - /usr/local/ver01/tengine/conf/vhost/server.conf
+
+- name: setup iptables open 3128
+  sudo: yes
+  shell: "{{ item }}"
+  with_items:
+    - /sbin/iptables -A INPUT -s 0.0.0.0  -p tcp --dport 80  -j ACCEPT
+    - service iptables save
+    - service iptables restart
+
+
+
+
+
+
+- name: copy server.conf to remote
+  sudo: yes
+  copy: src=files/{{ item }}  dest=/usr/local/ver01/tengine/conf/vhost/  owner=root group=root mode=0700 force=yes
+  with_items:
+    - server.conf
+
+
+- name: restup config
+  lineinfile: dest='{{item.dest}}'             regexp='{{item.regexp}}' state=present  line='{{item.line}}'
+  with_items:
+#    - { dest: /etc/vimrc , regexp: 'nosmartindent', line: 'set nosmartindent'  }
+    - { dest: /usr/local/ver01/tengine/conf/nginx.conf , regexp: 'proxy_cache_path  /usr/local/ver01/tengine/proxy_cache_dir  levels=1:2   keys_zone=cache_one:1024m inactive=90d max_size=100g;', line: 'proxy_cache_path  /usr/local/ver01/tengine/proxy_cache_dir  levels=1:2   keys_zone=cache_one:500m inactive=90d max_size=100g;'  }
+#    - { dest: /usr/local/ver01/tengine/conf/nginx.conf , regexp: '#proxy_cache_path', line: 'proxy_cache_path  /usr/local/ver01/tengine/proxy_cache_dir  levels=1:2   keys_zone=cache_one:500m inactive=90d max_size=100g;'  }
+  tags: restupconfig
+
+
+- name: restart TENGINX
+  sudo: yes
+  shell: "{{ item }}"
+  with_items:
+    - /usr/local/ver01/tengine/sbin/nginx -t && /usr/local/ver01/tengine/sbin/nginx -s reload
+
+
+
+- name: delete deploy file
+  sudo: yes
+  file: path={{ item }} state=ansent
+  with_items:
+    - /root/install_tengine.zip
+    - /root/install_tengine
+  ignore_errors: yes
+
